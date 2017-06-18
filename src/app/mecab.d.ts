@@ -1,0 +1,1 @@
+declare function toAnalyze(text: string): string;
