@@ -6,12 +6,20 @@ import { Component } from '@angular/core';
   //templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   template:`
-  <h1>{{title}}</h1>
-  <div>
-    <label>status:</label><label id="status">{{isLoaded}}</label><br>
-    <textarea [(ngModel)]="inputText" placeholder="入力欄"></textarea><br>
-    <label>{{currentText}}</label><br>
-    <input type="button" value="start" (click)="startClick()"><br>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <span class="navbar-brand">{{title}}</span>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="main" style="padding:90px 15px">
+      <label>status:</label><label id="status">{{isLoaded}}</label><br>
+      <textarea [(ngModel)]="inputText" placeholder="入力欄" class="form-control" rows="3"></textarea><br>
+      <label>{{currentText}}</label><br>
+      <input type="button" value="start" class="btn btn-default" (click)="startClick()" ><br>
+    </div>
   </div>
   `
 })
