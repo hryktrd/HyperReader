@@ -9,7 +9,13 @@ import { Component } from '@angular/core';
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
-        <span class="navbar-brand">{{title}}</span>
+        <a routerLink="" class="navbar-brand" role="button">{{title}}</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a routerLink="" role="button">Main</a></li>
+          <li><a routerLink="/config" role="button">Conf</a></li> 
+        </ul>
       </div>
     </div>
   </nav>
@@ -19,6 +25,9 @@ import { Component } from '@angular/core';
       <textarea [(ngModel)]="inputText" placeholder="入力欄" class="form-control" rows="3"></textarea><br>
       <label>{{currentText}}</label><br>
       <input type="button" value="start" class="btn btn-default" (click)="startClick()" ><br>
+    </div>
+    <div>
+      <router-outlet></router-outlet>
     </div>
   </div>
   `
