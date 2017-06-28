@@ -7,8 +7,20 @@ import { ConfigService } from '../config.service';
   styleUrls: ['./main.component.css'],
   template: `
   <textarea [(ngModel)]="inputText" placeholder="入力欄" class="form-control" rows="3"></textarea><br>
-  <label>{{currentText}}</label><br>
+  <!--<label>{{currentText}}</label><br>-->
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="panel panel-default">
+            <div class="panel-heading"><h3 class="panel-title">panel</h3></div>
+            <div class="panel-body">{{currentText}}</div>
+          </div>
+        </div>
+      </div>
   <input type="button" value="start" class="btn btn-default" (click)="startClick()" ><br>
+  <!--<input type="button" value="parse only" class="btn btn-default" (click)="parseClick()" ><br>
+    <div class="row">
+      <button *ngFor="let word of builtText" class="btn btn-default">{{word}}</button>
+    </div>-->
   `
 })
 export class MainComponent implements OnInit {
@@ -25,6 +37,9 @@ export class MainComponent implements OnInit {
   analyzedText: string;
   builtText: string[];
   currentText: string;
+  parseClick(){
+    this.parse();
+  }
   async startClick(){
     if(toAnalyze){console.log("found.")}else{console.log("not found.");}
     // 入力テキストの解析

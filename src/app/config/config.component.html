@@ -6,7 +6,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2" for="span">span(millisecond)</label>
     <div class="col-sm-2">
-      <select id="span" class="form-control" [(ngModel)]="config.replacementSpan" name="span">
+      <select id="span" class="form-control" [(ngModel)]="curConfig.replacementSpan" name="span">
         <option *ngFor="let span of spans">{{span}}</option>
       </select>
     </div>
@@ -14,7 +14,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2" for="bytes">bytes</label>
     <div class="col-sm-2">
-      <select id="bytes" class="form-control" [(ngModel)]="config.joinUnit" name="bytes">
+      <select id="bytes" class="form-control" [(ngModel)]="curConfig.joinUnit" name="bytes">
         <option *ngFor="let byte of bytes">{{byte}}</option>
       </select>
     </div>
@@ -26,9 +26,13 @@
       <label>
         <!--<input type="checkbox" [(checked)]="config.isPointInPrev">-->
         <!--<input type="checkbox" [checked]="config.isPointInPrev" (input)="config.isPointInPrev=$event.target.value">-->
-        <input type="checkbox" [(ngModel)]="config.isPointInPrev" name="point">
+        <input type="checkbox" [(ngModel)]="curConfig.isPointInPrev" name="point">
       </label>
       </div>
     </div>
   </div>
+  <button class="btn btn-primary" (click)="save()">save</button>
+  <button class="btn btn-default" (click)="restore()">cancell</button>
+  <div class="alert alert-success" role="alert" *ngIf="showSaved">saved.</div>
+  <div class="alert alert-info" role="alert" *ngIf="showCancelled">cancelled.</div>
 </form>
