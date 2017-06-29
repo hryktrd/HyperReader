@@ -27,7 +27,6 @@ import { Component } from '@angular/core';
   </nav>
   <div class="container">
     <div class="main" style="padding:90px 15px">
-      <label>status:</label><label id="status">{{isLoaded}}</label><br>
       <router-outlet></router-outlet>
     </div>
   </div>

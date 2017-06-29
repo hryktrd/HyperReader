@@ -16,11 +16,17 @@ import { ConfigService } from '../config.service';
           </div>
         </div>
       </div>
-  <input type="button" value="start" class="btn btn-default" (click)="startClick()" ><br>
+  <input type="button" value="start" id="btn-start" class="btn btn-primary" (click)="startClick()" ><br>
   <!--<input type="button" value="parse only" class="btn btn-default" (click)="parseClick()" ><br>
     <div class="row">
       <button *ngFor="let word of builtText" class="btn btn-default">{{word}}</button>
     </div>-->
+  <div class="progress" *ngIf="showProgress">
+    <div class="progress-bar" id="progressDownload" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valueMax="100" [style.width]="loadWidth">
+      <span class="sr-only">complete</span>
+    </div>
+  </div>
+  <div class="alert alert-info" role="alert" *ngIf="showLoaded">Library loaded.</div>
   `
 })
 export class MainComponent implements OnInit {
@@ -28,12 +34,39 @@ export class MainComponent implements OnInit {
   constructor(private config: ConfigService) { }
 
   ngOnInit() {
+    let btnStart = document.getElementById('btn-start');
+    let progDL = document.getElementById('progressDownload');
+    let numFormat = new Intl.NumberFormat('ja-JP', {maximumSignificantDigits:2});
+    //btnStart.setAttribute('disabled', 'disabled');
+    // mecab load
+    window.addEventListener('mecab_loading', (event: ProgressEvent)=>{
+      //console.log(event);
+      this.showProgress = true;
+      this.loadValue = event.loaded;
+      this.loadMax = event.total;
+      this.loadWidth = (event.loaded / event.total * 100).toString() + '%';
+    },false);
+    //window.addEventListener('mecab_loaded', function(event: Event){
+    window.addEventListener('mecab_loaded', async (event: Event) => {
+      this.isLoaded = true;
+      //btnStart.removeAttribute('disabled');
+      this.showLoaded = true;
+      await sleep(2000);
+      this.showProgress = false;
+      this.showLoaded = false;
+    },false);
   }
 
   inputText: string = `Angularは、Web技術でのアプリケーション構築を容易にするプラットフォームです。
   宣言的テンプレート、依存性注入、包括的なツール群や、統合されたベストプラクティスを組み合わせて、開発の課題を解決します。
   Angularは、Web、モバイル、またはデスクトップで動作するアプリケーションを構築できるようにします。
   `;
+  isLoaded: boolean = false;
+  showProgress: boolean = false;
+  showLoaded: boolean = false;
+  loadMax: number = 100;
+  loadValue: number = 0;
+  loadWidth: string = '0%';
   analyzedText: string;
   builtText: string[];
   currentText: string;
