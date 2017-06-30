@@ -7,7 +7,6 @@ import { ConfigService } from '../config.service';
   styleUrls: ['./main.component.css'],
   template: `
   <textarea [(ngModel)]="inputText" placeholder="入力欄" class="form-control" rows="3"></textarea><br>
-  <!--<label>{{currentText}}</label><br>-->
       <div class="row">
         <div class="col-sm-4">
           <div class="panel panel-default">
@@ -16,11 +15,11 @@ import { ConfigService } from '../config.service';
           </div>
         </div>
       </div>
-  <input type="button" value="start" id="btn-start" class="btn btn-primary" (click)="startClick()" ><br>
-  <!--<input type="button" value="parse only" class="btn btn-default" (click)="parseClick()" ><br>
-    <div class="row">
+  <input type="button" value="start" id="btn-start" class="btn btn-primary" (click)="startClick()" >
+  <input type="button" value="parse only" class="btn btn-warning" (click)="parseClick()" *ngIf="config.isDevMode"><br>
+    <div class="row" *ngIf="config.isDevMode">
       <button *ngFor="let word of builtText" class="btn btn-default">{{word}}</button>
-    </div>-->
+    </div>
   <div class="progress" *ngIf="showProgress">
     <div class="progress-bar" id="progressDownload" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valueMax="100" [style.width]="loadWidth">
       <span class="sr-only">complete</span>
@@ -99,17 +98,27 @@ export class MainComponent implements OnInit {
     // 解析結果の形態素を、適当な長さにまとめる。
     for(let line of this.analyzedText.split('\n')){
       word = line.split('\t')[0];
-      if(word.startsWith('EOS')){
+      if(/^EOS/.test(line)){
         // End of Statement.
         word = '';
       }else if(this.bytes(tmp) + this.bytes(word) < this.config.joinUnit){
-        // 17バイトで制限（暫定）
+        // バイト長
         tmp += word;
-      }else if(point.indexOf(word) >= 0){
+      }else if(/記号,読点|記号,句点/.test(line)){
         if(this.config.isPointInPrev){
           // 句読点は末尾に結合
           tmp += word;
         }
+      }else if(/\t助詞/.test(line)){
+        if(this.config.isParticleInPrev){ tmp += word; }
+      }else if(/\t助動詞/.test(line)){
+        if(this.config.isAuxiliaryVerbInPrev){ tmp += word; }
+      }else if(/名詞,接尾/.test(line)){
+        if(this.config.isNounSuffixInPrev){ tmp += word; }
+      }else if(/動詞,接尾/.test(line)){
+        if(this.config.isVerbSuffixInPrev){ tmp += word; }
+      }else if(/動詞,非自立/.test(line)){
+        if(this.config.isVerbNonSelfRelianceInPrev){ tmp += word; }
       }else{
         i += 1;
         tmp = word;

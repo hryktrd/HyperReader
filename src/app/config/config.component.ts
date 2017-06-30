@@ -28,7 +28,7 @@ export class ConfigComponent implements OnInit {
     await sleep(2000);
     this.showSaved = false;
   }
-  bytes: number[] = [15,16,17,18,19,20];
+  bytes: number[] = [0,4,8,12,16,20,24];
   spans: number[] = [500,400,300,200,100];
 }
 function sleep(msec):Promise<number> {
