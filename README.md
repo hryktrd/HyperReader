@@ -1,7 +1,7 @@
 # HyperReader
 
-HyperReader は、日本語の速読ツールです。  
-眼球を動かさないことで速読を実現する[splitz](http://spritzinc.com/)というアプリケーションに影響を受けて、自分用に日本語向けを作成しました。  
+HyperReader は、日本語の速読ツールです。  
+眼球を動かさないことで速読を実現する[splitz](http://spritzinc.com/)というアプリケーションに影響を受けて、自分用に日本語向けを作成しました。  
 本プロジェクトのプロダクトは、[Github Pages で公開](https://n-fukuju.github.io/HyperReader/)しています。  
 
 ## 日本語解析について
