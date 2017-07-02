@@ -1,28 +1,26 @@
 # HyperReader
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.6.
+HyperReader は、日本語の速読ツールです。  
+眼球を動かさないことで速読を実現する[splitz](http://spritzinc.com/)というアプリケーションに影響を受けて、自分用に日本語向けを作成しました。  
+本プロジェクトのプロダクトは、[Github Pages で公開](https://n-fukuju.github.io/HyperReader/)しています。  
 
-## Development server
+## 日本語解析について
+日本語の解析には、[MeCab](https://github.com/taku910/mecab)を使用しています。  
+ただし、C++で実装されている本家のMeCabは、本プロダクト（Angular：TypeScript）から呼び出すことができないため、実際にはMeCabをJavaScriptにコンパイルしたものである [MeCab on the Web](https://github.com/fasiha/mecab-emscripten)を利用しています。  
+本プロジェクトでは、MeCab on the Web をBSDライセンスで利用しています。  
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## 通信量について
+MeCab本体と辞書データで、50MB超のサイズがあります。従量課金のネットワークでの利用にはご注意ください。  
 
-## Code scaffolding
+## ローカルで試す場合
+```bash
+git clone <repository>.git
+cd <project>
+npm install
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
+npm install -g @angular/cli
+ng serve --open
+```
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## ライセンス
+BSD、またはMIT。
